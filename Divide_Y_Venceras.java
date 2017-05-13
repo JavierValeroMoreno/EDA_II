@@ -1,67 +1,45 @@
+package EDA_II;
+
+import EDA_II.Construccion;
 import java.io.*;
+import java.util.ArrayList;
 
 public class Divide_Y_Venceras{
     
-    private class Fabrica{
+    private class Fabrica extends Construccion{
 
-        public String calle;
-        public String avenida;
-        public char orienacion;
-        public double caudal;
-        public double [] contaminantes;
+        public Fabrica(String calle, String avenida,char orienacion, double caudal, double [] contaminantes){
 
-        public Fabrica(String calle, String avenida, double caudal, double [] contaminantes){
-
-            this.calle = calle;
-            this.avenida = avenida;
-            this.contaminantes = contaminantes;
+            super(calle,avenida,orienacion);
             this.caudal = caudal;
+            this.contaminantes = contaminantes;
 
         }
-
-        public double getCaudal(){
-            return this.caudal;
-        }
-        public double [] getContaminantes(){
-            return this.contaminantes;
-        }
-
     }
-    private class Sensor{
+    private class Sensor <T> extends Construccion{
 
-        public String calle;
-        public String avenida;
-        public char orienacion;
-        public Fabrica left;
-        public Fabrica right;
-        public double caudalA = 0.0;
-        public double[] contaminantesA;
+       
+        public T left;
+        public T right;
 
-        public Sensor(Sensor s, String calle, String avenida, char orienacion){
-            this.caudalA = s.getCaudalT();
-            this.contaminantesA = s.getContaminantesT();
-            this.avenida = avenida;
-            this.calle = calle;
-            this.orienacion = orienacion;
-        }
-        public Sensor(String calle, String avenida, char orienacion){
-            this.calle = calle;
-            this.avenida = avenida;
-            this.orienacion = orienacion;
+        public Sensor <T>(String calle, String avenida, char orienacion){
+            super(calle,avenida,orientacion);
+
         }
 
         public setSensor(Sensor s){
             if (s == null)
                 throw new NullPointerException();
-            double [] aux = s.getContaminantesT();
-            if(contaminantesA != null)
-                for(int i = 0; i < this.contaminantesA.length; i++ )
-                    f.contaminantesA[i] += aux[i];
+            double [] aux = s.getContaminantes();
+            if(contaminantes != null)
+                for(int i = 0; i < this.contaminantes.length; i++ )
+                    f.contaminantes[i] += aux[i];
             else
-                contaminantesA = aux;
-            caudalA += s.getCaudalT();
+                contaminantes = aux;
+            caudalA += s.getCaudal();
         }
         public void setFabricaL(Fabrica f){
+
             if(f.calle != this.calle && f.avenida != this.avenida)
                 throw new RuntimeException();
             if(f == null)
@@ -69,14 +47,15 @@ public class Divide_Y_Venceras{
             this.left = f;  
             double[] aux = f.getContaminantes();
 
-            if(contaminantesA != null)
-                for(int i = 0; i < this.contaminantesA.length; i++ )
-                    f.contaminantesA[i] += aux[i];
+            if(contaminantes != null)
+                for(int i = 0; i < this.contaminantes.length; i++ )
+                    f.contaminantes[i] += aux[i];
             else
-                contaminantesA = aux;
-            caudalA += f.getCaudal();
+                contaminantes = aux;
+            caudal += f.getCaudal();
             
         }
+   
         public void setFabricaR(Fabrica f){
             if(f.calle != (this.calle + 1.0) && f.avenida != this.avenida)
                 throw new RuntimeException();
@@ -85,19 +64,14 @@ public class Divide_Y_Venceras{
             this.right = f;
             double[] aux = f.getContaminantes();
 
-            if(contaminantesA != null)
-                for(int i = 0; i < this.contaminantesA.length; i++ )
-                    contaminantesA[i] += aux[i];
+            if(contaminantes != null)
+                for(int i = 0; i < this.contaminantes.length; i++ )
+                    contaminantes[i] += aux[i];
             else
-                contaminantesA = aux;
-            caudalA += f.getCaudal();
+                contaminantes = aux;
+            caudal += f.getCaudal();
         }
-        public double getCaudalT(){
-            return this.caudalA;
-        }
-        public double[] getContaminantesT(){
-            return this.contaminantesA;
-        }
+      
         
     } 
 }
