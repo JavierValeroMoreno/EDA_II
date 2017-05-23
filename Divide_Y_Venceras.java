@@ -5,7 +5,26 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class Divide_Y_Venceras{
+
+    public ArrayList<Sensor> ciudad;
+
+    public void cargarArchivo(String fichero){
+
+    }
+
+    public Divide_Y_Venceras(String fichero){
+       cargarArchivo(fichero);
+    }
+
+    public void metodoDivideyVenceras(){
+
+        
+
+    }
     
+    private double calcFlujo(double caudal, double contaminante){
+        return contaminante/caudal;
+    }
     private class Fabrica extends Construccion{
 
         public Fabrica(String calle, String avenida,char orienacion, double caudal, double [] contaminantes){
@@ -38,40 +57,42 @@ public class Divide_Y_Venceras{
                 contaminantes = aux;
             caudalA += s.getCaudal();
         }
-        public void setFabricaL(Fabrica f){
+        public void setConstruccionL(T parametro){
 
-            if(f.calle != this.calle && f.avenida != this.avenida)
-                throw new RuntimeException();
-            if(f == null)
-                throw new NullPointerException();
-            this.left = f;  
-            double[] aux = f.getContaminantes();
-
-            if(contaminantes != null)
-                for(int i = 0; i < this.contaminantes.length; i++ )
-                    f.contaminantes[i] += aux[i];
-            else
-                contaminantes = aux;
-            caudal += f.getCaudal();
+            if(typeof(parametro) == Fabrica)
+                if(parametro.calle != this.calle && parametro.avenida != this.avenida)
+                            throw new RuntimeException();
             
-        }
-   
-        public void setFabricaR(Fabrica f){
-            if(f.calle != (this.calle + 1.0) && f.avenida != this.avenida)
-                throw new RuntimeException();
-            if(f == null)
+            if(parametro == null)
                 throw new NullPointerException();
-            this.right = f;
-            double[] aux = f.getContaminantes();
+            this.left = parametro;  
+            double[] aux = (typeof(parametro) == Fabrica)? parametro.getContaminantes: parametro.get(0).getContaminantes ;
 
             if(contaminantes != null)
                 for(int i = 0; i < this.contaminantes.length; i++ )
                     contaminantes[i] += aux[i];
             else
                 contaminantes = aux;
-            caudal += f.getCaudal();
+            caudal +=(typeof(parametro) == Fabrica)? parametro.getCaudal() : parametro.get(0).getCaudal();
+            
         }
-      
-        
+
+        public void setConstruccionR(T parametro){
+            if(typeof(parametro) == Fabrica)
+                if(parametro.calle != (this.calle + 1.0) && parametro.avenida != this.avenida)
+                    throw new RuntimeException();
+            if(parametro == null)
+                throw new NullPointerException();
+            this.right = parametro;
+            double[] aux (typeof(parametro) == Fabrica)? parametro.getContaminantes() : parametro.get(0).getContaminantes();
+
+            if(contaminantes != null)
+                for(int i = 0; i < this.contaminantes.length; i++ )
+                     contaminantes[i] += aux[i];
+            else
+                contaminantes = aux;
+            caudal +=(typeof(parametro) == Fabrica)? parametro.getCaudal() : parametro.get(0).getCaudal();
+        }
+         
     } 
 }
